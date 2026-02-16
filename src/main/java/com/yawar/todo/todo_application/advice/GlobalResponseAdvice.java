@@ -31,12 +31,12 @@ public class GlobalResponseAdvice implements ResponseBodyAdvice {
 
         if (body instanceof Exception) {
             return ApiResponse.error(
+                    HttpStatus.INTERNAL_SERVER_ERROR.value(),
                     ((Exception) body).getMessage(),
-                    Arrays.stream(((Exception) body).getStackTrace()).map(StackTraceElement::toString).toList(),
-                    HttpStatus.INTERNAL_SERVER_ERROR
+                    Arrays.stream(((Exception) body).getStackTrace()).map(StackTraceElement::toString).toList()
             );
         }
 
-        return ApiResponse.success("SUCCESS",body,HttpStatus.OK);
+        return ApiResponse.success(HttpStatus.OK.value(),"SUCCESS",body);
     }
 }
